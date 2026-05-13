@@ -1,0 +1,46 @@
+{
+  "name": "pcdl-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:e2e": "playwright test",
+    "pcdl:login": "node scripts/pcdl-login-save-state.mjs",
+    "pcdl:collect-links": "node scripts/collect-pcdl-page-links.mjs --headful",
+    "pcdl:collect-links:dry": "node scripts/collect-pcdl-page-links.mjs --headful --dry-run --limit=10",
+    "pcdl:collect-links:library": "node scripts/collect-pcdl-page-links.mjs --mode=library --headful --dry-run --limit=10",
+    "pcdl:collect-links:search": "node scripts/collect-pcdl-page-links.mjs --mode=search --headful --dry-run --limit=10",
+    "pcdl:collect-links:csv": "node scripts/collect-pcdl-page-links.mjs --mode=csv --csv=pcdl_links.csv --dry-run",
+    "pcdl:collect-links:hybrid": "node scripts/collect-pcdl-page-links.mjs --mode=hybrid --headful --dry-run --limit=10",
+    "pcdl:refresh": "node scripts/refresh-pcdl-media-links.mjs --days=3",
+    "pcdl:refresh:dry": "node scripts/refresh-pcdl-media-links.mjs --days=3 --dry-run",
+    "pcdl:refresh:headful": "node scripts/refresh-pcdl-media-links.mjs --days=3 --headful"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
+    "dotenv": "^17.4.2",
+    "next": "14.2.33",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^20.16.5",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.33",
+    "playwright": "^1.60.0",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
