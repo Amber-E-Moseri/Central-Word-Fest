@@ -279,14 +279,6 @@
             </div>
           </div>
         </div>
-        <div style="display:grid;gap:14px">
-          <div class="card">
-            <div style="font-size:13px;font-weight:800;margin-bottom:8px">Live app</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.65">
-              Sign up with your real email, choose your fellowship, and begin the Central Summer Word Fest journey.
-            </div>
-          </div>
-        </div>
       </div>`;
     showAuthMode("login");
   }

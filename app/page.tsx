@@ -50,7 +50,7 @@ export default function HomePage() {
         <header className="header" id="app-header">
           <div className="header-top">
             <div>
-              <div className="brand-name">Central Summer Word Fest</div>
+              <div className="brand-name">Central World Fest</div>
               <div className="brand-sub" id="header-sub">Accountability Challenge</div>
             </div>
             <div id="user-badge-area"></div>

@@ -1,0 +1,4 @@
+window.PCDL_CONFIG = {
+  SUPABASE_URL: "https://rwcebepdcttuibjyqvap.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3Y2ViZXBkY3R0dWlianlxdmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2MzI1NzMsImV4cCI6MjA5NDIwODU3M30.5yk4Ib-FoHT-tFV4NyLOa3q24Ip8orG8QuLW4xCAZl0"
+};

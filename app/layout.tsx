@@ -1,8 +1,8 @@
 import "../styles.css";
 
 export const metadata = {
-  title: "PCDL Platform",
-  description: "Central Summer Word Fest accountability platform"
+  title: "Central World Fest",
+  description: "Central World Fest accountability platform"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -134,16 +134,16 @@ function pageHome(m){
       </div>
       <div class="home-right">
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Points</div><div class="stat-val">10</div></div>
-          <div class="stat-card"><div class="stat-label">Streak</div><div class="stat-val">2</div></div>
-          <div class="stat-card"><div class="stat-label">Rank</div><div class="stat-val">#2</div></div>
+          <div class="stat-card"><div class="stat-label">Points</div><div class="stat-val">-</div></div>
+          <div class="stat-card"><div class="stat-label">Streak</div><div class="stat-val">-</div></div>
+          <div class="stat-card"><div class="stat-label">Rank</div><div class="stat-val">-</div></div>
         </div>
         <div class="card">
           <div class="card-title" style="font-size:15px">${u.role==='coordinator'?'Fellowship lead view':'Your fellowship'}</div>
           <div class="member-row" style="border:none;padding:0">
             <div class="avatar">${u.fellowship.slice(0,2).toUpperCase()}</div>
-            <div class="member-info"><div class="member-name">${u.fellowship} Fellowship</div><div class="member-sub">${u.role==='coordinator'?'You are participating and leading this fellowship view':'8 of 12 leaders participated today'}</div></div>
-            <span class="badge badge-amber">67%</span>
+            <div class="member-info"><div class="member-name">${u.fellowship} Fellowship</div><div class="member-sub">${u.role==='coordinator'?'You are participating and leading this fellowship view':'Participation stats are loading.'}</div></div>
+            <span class="badge badge-amber">-</span>
           </div>
           ${u.role==='coordinator'?`<button class="btn btn-soft btn-full" style="margin-top:12px" onclick="go('analytics')">Open fellowship stats Ã¢â€ â€™</button>`:''}
         </div>
@@ -298,18 +298,18 @@ function pageAnalytics(m){
   m.style.gridTemplateColumns='';
   m.innerHTML=`
     <div class="metrics-grid" style="margin-bottom:0">
-      <div class="big-metric"><div class="metric-label">Leaders today</div><div class="metric-val">31/45</div></div>
-      <div class="big-metric"><div class="metric-label">Participation</div><div class="metric-val">69%</div></div>
-      <div class="big-metric"><div class="metric-label">At risk</div><div class="metric-val">8</div></div>
-      <div class="big-metric"><div class="metric-label">Top fellowship</div><div class="metric-val">East</div></div>
+      <div class="big-metric"><div class="metric-label">Leaders today</div><div class="metric-val">-</div></div>
+      <div class="big-metric"><div class="metric-label">Participation</div><div class="metric-val">Loading...</div></div>
+      <div class="big-metric"><div class="metric-label">At risk</div><div class="metric-val">-</div></div>
+      <div class="big-metric"><div class="metric-label">Top fellowship</div><div class="metric-val">-</div></div>
     </div>
     <div class="circle-pane">
       <div class="card">
         <div class="card-title">By fellowship</div>
-        ${[['Central',67],['West',58],['East',83],['North',72],['South',61]].map(([f,v])=>`
+        ${[['Central','-'],['West','-'],['East','-'],['North','-'],['South','-']].map(([f,v])=>`
           <div class="bar-row">
-            <div class="bar-head"><span>${f}</span><span>${v}%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:${v}%"></div></div>
+            <div class="bar-head"><span>${f}</span><span>${v === '-' ? '-' : `${v}%`}</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
           </div>`).join('')}
       </div>
       <div class="card">
@@ -456,18 +456,18 @@ function renderAdmin(){
 
   else if(S.adminPage==='analytics') body=`
     <div class="metrics-grid">
-      <div class="big-metric"><div class="metric-label">Leaders today</div><div class="metric-val">31/45</div></div>
-      <div class="big-metric"><div class="metric-label">Participation</div><div class="metric-val">69%</div></div>
-      <div class="big-metric"><div class="metric-label">At risk</div><div class="metric-val">8</div></div>
-      <div class="big-metric"><div class="metric-label">Top fellowship</div><div class="metric-val">East</div></div>
+      <div class="big-metric"><div class="metric-label">Leaders today</div><div class="metric-val">-</div></div>
+      <div class="big-metric"><div class="metric-label">Participation</div><div class="metric-val">Loading...</div></div>
+      <div class="big-metric"><div class="metric-label">At risk</div><div class="metric-val">-</div></div>
+      <div class="big-metric"><div class="metric-label">Top fellowship</div><div class="metric-val">-</div></div>
     </div>
     <div class="circle-pane">
       <div class="card">
         <div class="card-title">Participation by fellowship</div>
-        ${[['Central',67],['West',58],['East',83],['North',72],['South',61]].map(([f,v])=>`
+        ${[['Central','-'],['West','-'],['East','-'],['North','-'],['South','-']].map(([f,v])=>`
           <div class="bar-row">
-            <div class="bar-head"><span>${f}</span><span>${v}%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:${v}%"></div></div>
+            <div class="bar-head"><span>${f}</span><span>${v === '-' ? '-' : `${v}%`}</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
           </div>`).join('')}
       </div>
       
@@ -532,7 +532,7 @@ function renderPastor(){
     </div>
     <div class="card">
       <div class="card-title">Live Oversight Data</div>
-      <div class="notice">Sample analytics have been removed. Connect this dashboard to live Supabase reporting views.</div>
+      <div class="notice">Live oversight metrics will appear as data sync completes.</div>
     </div>`;
 }
 
@@ -600,7 +600,7 @@ function pageCoordinatorAnalytics(m){
     </div>
     <div class="card">
       <div class="card-title">Live Fellowship Stats</div>
-      <div class="notice">Sample coordinator analytics have been removed. Connect this view to live reporting queries scoped to the coordinator's assigned fellowship.</div>
+      <div class="notice">Live fellowship metrics will appear as data sync completes.</div>
     </div>`;
 }
 
