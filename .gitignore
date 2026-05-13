@@ -18,3 +18,8 @@ config.js
 *credentials*.json
 *token*.txt
 .env
+tsconfig.tsbuildinfo
+pcdl_links.csv
+test-results/
+node
+raf-platform*
