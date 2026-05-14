@@ -108,7 +108,7 @@ function renderSignup(){
   const main=el('main-content');
   if(!main) return;
   main.style.gridTemplateColumns='';
-  main.innerHTML='<div class="card"><div class="notice">Loading sign in...</div></div>';
+  main.innerHTML='<div class="card"><div class="notice">Signing in...</div></div>';
 }
 
 function roleHint(){}

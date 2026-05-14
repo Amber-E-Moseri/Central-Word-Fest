@@ -1,6 +1,7 @@
 (() => {
   let fellowshipOptionsCache = null;
   let fellowshipOptionsLoading = null;
+  let authStateListenerBound = false;
   const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
   function byId(id) {
@@ -363,20 +364,6 @@
   window.renderSignup = renderSignup;
   window.showAuthMode = showAuthMode;
 
-  PCDL.supabase.auth.onAuthStateChange(async (event, session) => {
-    if (event === "SIGNED_IN" && session && !S.user) {
-      await hydrateSupabaseUser();
-    }
-    if (event === "SIGNED_OUT") {
-      S.user = null;
-      S.page = "home";
-      if (typeof renderSignup === "function") renderSignup();
-    }
-    if (event === "TOKEN_REFRESHED" && session && S.user) {
-      // Session refreshed in background.
-    }
-  });
-
   async function initApp() {
     const hash = window.location.hash || "";
     if (hash.includes("type=recovery")) {
@@ -389,6 +376,21 @@
     }
 
     const hasUser = await hydrateSupabaseUser();
+
+    if (!authStateListenerBound && PCDL?.supabase?.auth) {
+      authStateListenerBound = true;
+      PCDL.supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === "SIGNED_IN" && session && !S.user) {
+          await hydrateSupabaseUser();
+        }
+        if (event === "SIGNED_OUT") {
+          S.user = null;
+          S.page = "home";
+          if (typeof renderSignup === "function") renderSignup();
+        }
+      });
+    }
+
     if (!hasUser) {
       const session = await PCDL.getSession();
       if (session) {
