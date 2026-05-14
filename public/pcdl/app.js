@@ -48,7 +48,7 @@ let circleDraft = [];
 // ────────────────────────────────────────────
 function render(){
   if(!S.user) renderSignup();
-  else if(isAdminRole(S.user.role)) renderAdmin();
+  else if(isAdminRole(S.user.role)) renderMember();
   else if(normalizeRole(S.user.role)==='Group Pastor') renderPastor();
   else renderMember();
   syncHeader();
@@ -88,6 +88,7 @@ function syncHeader(){
       {id:'fellowship',label:'People',icon:'👥'},
       {id:'community',label:'Community',icon:'💬'},
       ...(canSeeFellowshipStats(S.user.role) ? [{id:'analytics',label:'Stats',icon:'📊'}] : []),
+      ...(isAdminRole(S.user.role) ? [{id:'admin',label:'Admin',icon:'\u2699\uFE0F'}] : []),
     ];
     tabs.classList.remove('hidden');
     tabs.innerHTML=pages.map(p=>`<button class="tab-btn${S.page===p.id?' active':''}" onclick="go('${p.id}')">${p.label}</button>`).join('');
@@ -116,7 +117,7 @@ function logout(){S.user=null;circleDraft=[];render()}
 
 function renderMember(){
   if(S.page==='analytics' && !canSeeFellowshipStats(S.user.role)) S.page='home';
-  const fns={home:pageHome,today:pageToday,circle:pageCircle,fellowship:pageFellowship,community:pageCommunity,analytics:pageCoordinatorAnalytics};
+  const fns={home:pageHome,today:pageToday,circle:pageCircle,fellowship:pageFellowship,community:pageCommunity,analytics:pageCoordinatorAnalytics,admin:() => renderAdmin()};
   (fns[S.page]||pageHome)(el('main-content'));
 }
 
@@ -359,12 +360,12 @@ function renderAdmin(){
       <div class="card">
         <div class="card-title">Daily message setup</div>
         <div style="display:grid;gap:12px">
-          <div class="two-col">
-            <div class="form-group"><label>Day number</label><input id="media-day-input" type="number" min="1" value="${S.selectedDay}" onchange="onAdminDayChange()" style="width:100%"></div>
-            <div class="form-group"><label>Scheduled date</label><input id="day-scheduled-date-input" type="date" style="width:100%"></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:13px;font-weight:900;color:var(--muted);white-space:nowrap">Day</div>
+            <input id="media-day-input" type="number" min="1" value="${S.selectedDay}" onchange="onAdminDayChange()" style="width:80px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-family:inherit;font-size:16px;font-weight:900">
           </div>
+          <div class="form-group"><label>Scheduled date</label><input id="day-scheduled-date-input" type="date" style="width:100%"></div>
           <div class="form-group"><label>Day label</label><input id="day-label-input" placeholder="e.g. Day 16" style="width:100%"></div>
-          <div class="form-group"><label>Other label</label><input id="media-other-label-input" value="${S.todayMedia?.otherLabel || ''}" style="width:100%"></div>
           <div class="form-group"><label>Day active</label><select id="day-is-active-input"><option value="true">Active</option><option value="false">Inactive</option></select></div>
           <button class="btn btn-soft btn-full" onclick="saveMessageDay()">Save Day</button>
           <button class="btn btn-purple btn-full" onclick="addMessageItem()">+ Add Message</button>
@@ -457,15 +458,7 @@ function renderAdmin(){
               <td>${a.fellowship}</td>
               <td><span class="badge badge-red">${a.days} days</span></td>
             </tr>`).join('')}
-        </tbody></table>
-      </div>
-<div class="card">
-        <div class="card-title">Alerts</div>
-        <table><thead><tr><th>Name</th><th>Fellowship</th><th>Issue</th></tr></thead><tbody>
-          <tr><td>Chisom O.</td><td>Central</td><td><span class="badge badge-red">2 missed</span></td></tr>
-          <tr><td>Jide A.</td><td>West</td><td><span class="badge badge-amber">Backdated</span></td></tr>
-          <tr><td>Mara K.</td><td>North</td><td><span class="badge badge-red">Inactive</span></td></tr>
-          <tr><td>Dayo A.</td><td>Central</td><td><span class="badge badge-amber">1 missed</span></td></tr>
+          ${ALERTS.length ? "" : `<tr><td colspan="4">No live alerts right now.</td></tr>`}
         </tbody></table>
       </div>
     </div>`;
@@ -602,14 +595,12 @@ function hydrateAdminMediaForm(){
   const dayInput = el("media-day-input");
   const dayDateInput = el("day-scheduled-date-input");
   const dayLabelInput = el("day-label-input");
-  const otherLabelInput = el("media-other-label-input");
   const isActiveInput = el("day-is-active-input");
   const status = el("media-save-status");
 
   if(dayInput) dayInput.value = String(S.adminMessageDay.day_number || S.selectedDay || 1);
   if(dayDateInput) dayDateInput.value = S.adminMessageDay.scheduled_date || "";
   if(dayLabelInput) dayLabelInput.value = S.adminMessageDay.day_label || "";
-  if(otherLabelInput) otherLabelInput.value = S.adminMessageDay.other_label || "";
   if(isActiveInput) isActiveInput.value = String(S.adminMessageDay.is_active !== false);
   if(status && S.mediaSaveStatus){
     status.textContent = S.mediaSaveStatus;
@@ -656,35 +647,21 @@ function renderAdminMessageItems(){
   wrap.innerHTML = S.adminMessageItems.map((item, idx) => `
     <div class="card" style="margin-bottom:10px">
       <div class="card-title" style="font-size:14px">Message ${idx + 1}</div>
-      <div style="display:grid;gap:8px">
-        <input id="item-title-${item.id}" value="${item.title || ""}" placeholder="Title" style="width:100%">
-        <select id="item-source-${item.id}">
-          <option value="direct_video" ${item.source_type==="direct_video"?"selected":""}>direct_video</option>
-          <option value="direct_audio" ${item.source_type==="direct_audio"?"selected":""}>direct_audio</option>
-          <option value="web_link" ${item.source_type==="web_link"||!item.source_type?"selected":""}>web_link</option>
-        </select>
-        <input id="item-media-${item.id}" value="${item.media_url || ""}" placeholder="Direct Media URL" style="width:100%">
-        <input id="item-temp-media-${item.id}" value="${item.temporary_media_url || ""}" placeholder="Temporary Media URL (preferred for Today playback)" style="width:100%">
-        <input id="item-pcdl-url-${item.id}" value="${item.pcdl_url || ""}" placeholder="PCDL URL (fallback page)" style="width:100%">
-        <input id="item-source-page-${item.id}" value="${item.source_page_url || ""}" placeholder="PCDL Source Link" style="width:100%">
-        <input id="item-expires-${item.id}" type="datetime-local" value="${(item.media_url_expires_at || item.media_expires_at || "").replace('Z','').slice(0,16)}" style="width:100%">
-        <select id="item-status-${item.id}">
-          <option value="active" ${item.media_status==="active"?"selected":""}>active</option>
-          <option value="expired" ${item.media_status==="expired"?"selected":""}>expired</option>
-          <option value="needs_refresh" ${item.media_status==="needs_refresh"?"selected":""}>needs_refresh</option>
-          <option value="unavailable" ${item.media_status==="unavailable"?"selected":""}>unavailable</option>
-        </select>
-        <select id="item-fallback-status-${item.id}">
-          <option value="unknown" ${item.fallback_status==="unknown"||!item.fallback_status?"selected":""}>fallback: unknown</option>
-          <option value="verified" ${item.fallback_status==="verified"?"selected":""}>fallback: verified</option>
-          <option value="invalid" ${item.fallback_status==="invalid"?"selected":""}>fallback: invalid</option>
-        </select>
-        <input id="item-fallback-verified-${item.id}" type="datetime-local" value="${(item.fallback_url_verified_at || "").replace('Z','').slice(0,16)}" style="width:100%">
-        <input id="item-collected-at-${item.id}" type="datetime-local" value="${(item.media_collected_at || "").replace('Z','').slice(0,16)}" style="width:100%">
-        <input id="item-media-error-${item.id}" value="${item.media_error || ""}" placeholder="Media error (optional)" style="width:100%">
-        <div class="notice">${mediaExpiryWarning(item)}</div>
-        <input id="item-thumb-${item.id}" value="${item.thumbnail_url || ""}" placeholder="Thumbnail URL" style="width:100%">
-        <textarea id="item-notes-${item.id}" placeholder="Admin notes" style="width:100%;min-height:70px">${item.admin_notes || ""}</textarea>
+      <div style="display:grid;gap:10px">
+        <div class="form-group"><label>Title</label><input id="item-title-${item.id}" value="${item.title || ""}" placeholder="Title" style="width:100%"></div>
+        <div class="form-group">
+          <label>Source type</label>
+          <select id="item-source-${item.id}">
+            <option value="direct_video" ${item.source_type==="direct_video"?"selected":""}>Direct MP4</option>
+            <option value="direct_audio" ${item.source_type==="direct_audio"?"selected":""}>Direct MP3</option>
+            <option value="google_drive" ${item.source_type==="google_drive"?"selected":""}>Google Drive</option>
+            <option value="web_link" ${item.source_type==="web_link"||!item.source_type?"selected":""}>Web link</option>
+          </select>
+        </div>
+        <div class="form-group"><label>PCDL Source Page</label><input id="item-pcdl-url-${item.id}" value="${item.pcdl_url || ""}" placeholder="https://pcdl.co/watch/..." style="width:100%"></div>
+        <div class="form-group"><label>Playback URL</label><input id="item-temp-media-${item.id}" value="${item.temporary_media_url || ""}" placeholder="Direct playback URL" style="width:100%"></div>
+        <div class="form-group"><label>Thumbnail URL</label><input id="item-thumb-${item.id}" value="${item.thumbnail_url || ""}" placeholder="https://..." style="width:100%"></div>
+        <div class="form-group"><label>Admin notes</label><textarea id="item-notes-${item.id}" placeholder="Admin notes" style="width:100%;min-height:60px">${item.admin_notes || ""}</textarea></div>
         <div class="two-col">
           <label><input id="item-required-${item.id}" type="checkbox" ${item.is_required !== false ? "checked" : ""}> Required</label>
           <label><input id="item-active-${item.id}" type="checkbox" ${item.is_active !== false ? "checked" : ""}> Active</label>
@@ -702,7 +679,6 @@ async function saveMessageDay(){
     await PCDL.saveMessageDay(S.adminMessageDay.id,{
       scheduled_date: v("day-scheduled-date-input"),
       day_label: v("day-label-input"),
-      other_label: v("media-other-label-input"),
       is_active: (v("day-is-active-input") || "true") === "true"
     });
     S.mediaSaveStatus = "Day saved.";
@@ -716,30 +692,17 @@ async function saveMessageDay(){
 
 async function saveMessageItem(itemId){
   try{
-    const expRaw = v(`item-expires-${itemId}`);
-    const expIso = expRaw ? new Date(expRaw).toISOString() : null;
-    const collectedRaw = v(`item-collected-at-${itemId}`);
-    const collectedIso = collectedRaw ? new Date(collectedRaw).toISOString() : null;
-    const fallbackVerifiedRaw = v(`item-fallback-verified-${itemId}`);
-    const fallbackVerifiedIso = fallbackVerifiedRaw ? new Date(fallbackVerifiedRaw).toISOString() : null;
+    const tempUrl = v(`item-temp-media-${itemId}`);
     await PCDL.saveMessageItem(itemId,{
       title: v(`item-title-${itemId}`),
       source_type: v(`item-source-${itemId}`),
-      media_url: v(`item-media-${itemId}`),
-      temporary_media_url: v(`item-temp-media-${itemId}`),
+      temporary_media_url: tempUrl,
       pcdl_url: v(`item-pcdl-url-${itemId}`),
-      source_page_url: v(`item-source-page-${itemId}`),
-      media_expires_at: expIso,
-      media_url_expires_at: expIso,
-      media_collected_at: collectedIso,
-      media_status: v(`item-status-${itemId}`),
-      media_error: v(`item-media-error-${itemId}`),
-      fallback_status: v(`item-fallback-status-${itemId}`),
-      fallback_url_verified_at: fallbackVerifiedIso,
       thumbnail_url: v(`item-thumb-${itemId}`),
       admin_notes: v(`item-notes-${itemId}`),
       is_required: !!el(`item-required-${itemId}`)?.checked,
-      is_active: !!el(`item-active-${itemId}`)?.checked
+      is_active: !!el(`item-active-${itemId}`)?.checked,
+      ...(tempUrl ? { media_status: "active" } : {})
     });
     S.mediaSaveStatus = "Saved";
     await onAdminDayChange();
@@ -1088,12 +1051,12 @@ function isCoordinatorRole(role) {
 }
 
 function canAccessMemberExperience(role) {
-  return !isAdminRole(role) && !isGroupPastorRole(role);
+  return !isGroupPastorRole(role);
 }
 
 function canSeeFellowshipStats(role) {
   const r = normalizeRole(role);
-  return r === "Coordinator" || r === "Pastor" || r === "Subgroup Pastor";
+  return r === "Coordinator" || r === "Pastor" || r === "Subgroup Pastor" || r === "Admin";
 }
 
 
