@@ -46,7 +46,15 @@ if (hasInvalidSupabaseConfig(window.PCDL_CONFIG)) {
 } else {
   PCDL.supabase = window.supabase.createClient(
     window.PCDL_CONFIG.SUPABASE_URL,
-    window.PCDL_CONFIG.SUPABASE_ANON_KEY
+    window.PCDL_CONFIG.SUPABASE_ANON_KEY,
+    {
+      auth: {
+        persistSession: true,
+        storageKey: "pcdl-auth",
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
   );
 
 const SCHEMA_CACHE = new Map();

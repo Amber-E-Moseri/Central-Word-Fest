@@ -1,20 +1,20 @@
-﻿// Prototype app code from the latest HTML
+// Prototype app code from the latest HTML
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // DATA
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 const CIRCLE_STATUS=[
-  {label:'Done',        cls:'badge-green',note:'Completed Day 2 Ã‚Â· 10 pts'},
-  {label:'In progress', cls:'badge-amber',note:'Watching now Ã‚Â· 62%'},
+  {label:'Done',        cls:'badge-green',note:'Completed Day 2 · 10 pts'},
+  {label:'In progress', cls:'badge-amber',note:'Watching now · 62%'},
   {label:'Behind',      cls:'badge-red',  note:'Missed yesterday'},
 ];
 
 const REFLECTIONS = [];
 const ALERTS = [];
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // STATE
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 const S={
   user:null,
   page:'home',
@@ -43,9 +43,9 @@ const S={
 };
 let circleDraft = [];
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // ROOT RENDER
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function render(){
   if(!S.user) renderSignup();
   else if(isAdminRole(S.user.role)) renderAdmin();
@@ -54,9 +54,9 @@ function render(){
   syncHeader();
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // HEADER
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function syncHeader(){
   const sub=document.getElementById('header-sub');
   const badgeArea=document.getElementById('user-badge-area');
@@ -72,7 +72,7 @@ function syncHeader(){
   }
 
   const ini=initials(S.user.name);
-  sub.textContent=`${S.user.name} Ã‚Â· ${S.user.fellowship} Ã‚Â· ${cap(S.user.role)}`;
+  sub.textContent=`${S.user.name} · ${S.user.fellowship} · ${cap(S.user.role)}`;
   badgeArea.innerHTML=`
     <div class="user-badge">
       <div class="avatar-sm">${ini}</div>
@@ -82,12 +82,12 @@ function syncHeader(){
 
   if(canAccessMemberExperience(S.user.role)){
     const pages=[
-      {id:'home',  label:'Home',   icon:'Ã°Å¸ÂÂ '},
-      {id:'today', label:'Today',  icon:'Ã¢â€“Â¶Ã¯Â¸Â'},
-      {id:'circle',label:'Circle', icon:'Ã°Å¸â€â€ž'},
-      {id:'fellowship',label:'People',icon:'Ã°Å¸â€˜Â¥'},
-      {id:'community',label:'Community',icon:'Ã°Å¸â€™Â¬'},
-      ...(canSeeFellowshipStats(S.user.role) ? [{id:'analytics',label:'Stats',icon:'Ã°Å¸â€œÅ '}] : []),
+      {id:'home',  label:'Home',   icon:'🏠'},
+      {id:'today', label:'Today',  icon:'▶️'},
+      {id:'circle',label:'Circle', icon:'🔄'},
+      {id:'fellowship',label:'People',icon:'👥'},
+      {id:'community',label:'Community',icon:'💬'},
+      ...(canSeeFellowshipStats(S.user.role) ? [{id:'analytics',label:'Stats',icon:'📊'}] : []),
     ];
     tabs.classList.remove('hidden');
     tabs.innerHTML=pages.map(p=>`<button class="tab-btn${S.page===p.id?' active':''}" onclick="go('${p.id}')">${p.label}</button>`).join('');
@@ -100,9 +100,9 @@ function syncHeader(){
   }
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// SIGNUP Ã¢â‚¬â€ STEP 1
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
+// SIGNUP — STEP 1
+// ────────────────────────────────────────────
 function renderSignup(){
   const main=el('main-content');
   if(!main) return;
@@ -130,7 +130,7 @@ function pageHome(m){
         <div class="hero-eyebrow">Stay consistent</div>
         <div class="hero-title">Finish<br>strong.</div>
         <div class="hero-body">Today's message is ready. Complete it and help your fellowship stay strong.</div>
-        <button class="btn-gold" onclick="go('today')">Continue today Ã¢â€ â€™</button>
+        <button class="btn-gold" onclick="go('today')">Continue today →</button>
       </div>
       <div class="home-right">
         <div class="stats-grid">
@@ -145,7 +145,7 @@ function pageHome(m){
             <div class="member-info"><div class="member-name">${u.fellowship} Fellowship</div><div class="member-sub">${u.role==='coordinator'?'You are participating and leading this fellowship view':'Participation stats are loading.'}</div></div>
             <span class="badge badge-amber">-</span>
           </div>
-          ${u.role==='coordinator'?`<button class="btn btn-soft btn-full" style="margin-top:12px" onclick="go('analytics')">Open fellowship stats Ã¢â€ â€™</button>`:''}
+          ${u.role==='coordinator'?`<button class="btn btn-soft btn-full" style="margin-top:12px" onclick="go('analytics')">Open fellowship stats →</button>`:''}
         </div>
         <div class="card">
           <div class="card-title" style="font-size:15px">Your circle</div>
@@ -155,7 +155,7 @@ function pageHome(m){
               <div class="member-info"><div class="member-name">${mem.name}</div><div class="member-sub">${CIRCLE_STATUS[i].note}</div></div>
               <span class="badge ${CIRCLE_STATUS[i].cls}">${CIRCLE_STATUS[i].label}</span>
             </div>`).join('')}
-          <button class="btn btn-soft btn-full" style="margin-top:8px" onclick="go('circle')">View full circle Ã¢â€ â€™</button>
+          <button class="btn btn-soft btn-full" style="margin-top:8px" onclick="go('circle')">View full circle →</button>
         </div>
       </div>
     </div>`;
@@ -203,13 +203,12 @@ function pageCircle(m){
           My Accountability Circle
           <button class="btn btn-soft btn-sm" onclick="openOverlay()">Edit circle</button>
         </div>
-        <div class="notice" style="margin-bottom:16px">Your circle is personal Ã¢â‚¬â€ not a fixed group. Each person you choose can see your daily progress. Partners can be from any fellowship.</div>
         ${members.map((mem,i)=>`
           <div class="member-row">
             <div class="avatar${i===0?' gold':i===2?' bronze':''}">${mem.ini}</div>
             <div class="member-info">
               <div class="member-name">${mem.name}</div>
-              <div class="member-sub">${mem.fellowship} Ã‚Â· ${cap(mem.role)} Ã‚Â· ${CIRCLE_STATUS[i%3].note}</div>
+              <div class="member-sub">${mem.fellowship} · ${cap(mem.role)} · ${CIRCLE_STATUS[i%3].note}</div>
             </div>
             <span class="badge ${CIRCLE_STATUS[i%3].cls}">${CIRCLE_STATUS[i%3].label}</span>
           </div>`).join('')}
@@ -222,18 +221,6 @@ function pageCircle(m){
           <div class="stat-card"><div class="stat-label">Watching</div><div class="stat-val">1</div></div>
           <div class="stat-card"><div class="stat-label">Behind</div><div class="stat-val">1</div></div>
         </div>
-        <div class="notice" style="margin-top:12px">Only accepted partners can see each other's progress.</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">How it works</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px">You choose who holds you accountable. Circles can overlap across fellowships Ã¢â‚¬â€ that's intentional.</div>
-        <div style="background:var(--cream);border-radius:10px;padding:14px;font-size:12px;line-height:1.8">
-          <strong>Grace</strong> chose Emeka + Chisom<br>
-          <strong>Emeka</strong> chose Grace + Ada + Jide<br>
-          <em style="color:var(--muted)">Circles overlap Ã¢â‚¬â€ that's okay</em>
-        </div>
-        <button class="btn btn-soft btn-full" style="margin-top:12px" onclick="go('fellowship')">Browse all members Ã¢â€ â€™</button>
       </div>
     </div>`;
 }
@@ -246,7 +233,7 @@ function pageCommunity(m){
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
         <div>
           <div style="font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-bottom:4px">Community Reflections</div>
-          <div style="font-size:20px;font-weight:900">Shared responses from todayÃ¢â‚¬â„¢s message</div>
+          <div style="font-size:20px;font-weight:900">Shared responses from today’s message</div>
         </div>
         <span style="background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:900">Optional sharing</span>
       </div>
@@ -268,16 +255,6 @@ function pageCommunity(m){
         <button class="btn btn-purple btn-full" style="margin-top:12px">Post reflection</button>
       </div>
 
-      <div class="card">
-        <div class="card-title">Community guidelines</div>
-        <div class="notice">Reflections are for encouragement, testimony, and building consistency. Sharing is optional; private reflections remain private.</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px">
-          Ã¢â‚¬Â¢ Keep it edifying<br>
-          Ã¢â‚¬Â¢ No pressure to share publicly<br>
-          Ã¢â‚¬Â¢ Circle/fellowship/everyone visibility is chosen by the person posting
-        </div>
-      </div>
-
       <div class="card" style="grid-column:1/-1">
         <div class="card-title">Shared reflections</div>
         ${REFLECTIONS.map(r=>`
@@ -285,9 +262,9 @@ function pageCommunity(m){
             <div class="avatar">${r.ini}</div>
             <div class="member-info">
               <div class="member-name">${r.user} <span class="badge badge-purple" style="margin-left:6px">${r.visibility}</span></div>
-              <div class="member-sub">${r.fellowship} Ã‚Â· ${cap(r.role)}</div>
+              <div class="member-sub">${r.fellowship} · ${cap(r.role)}</div>
               <div style="font-size:13px;line-height:1.6;margin-top:8px;color:var(--text)">${r.text}</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:8px">Ã°Å¸â€Â¥ Amen Ã‚Â· ${r.reactions} reactions</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:8px">🔥 Amen · ${r.reactions} reactions</div>
             </div>
           </div>`).join('')}
       </div>
@@ -327,28 +304,27 @@ function pageFellowship(m){
   m.style.gridTemplateColumns='';
   const FSHIPS=[
     {name:'Central',members:[
-      {n:'Grace A.',i:'GA',sub:'Leader Ã‚Â· 10 pts Ã‚Â· 2-day streak',s:'Done',c:'badge-green'},
-      {n:'Chisom O.',i:'CO',sub:'Leader Ã‚Â· 5 pts Ã‚Â· missed yesterday',s:'Behind',c:'badge-red'},
-      {n:'Ada M.',i:'AM',sub:'Member Ã‚Â· 9 pts Ã‚Â· 1 backdated',s:'Catch-up',c:'badge-amber'},
+      {n:'Grace A.',i:'GA',sub:'Leader · 10 pts · 2-day streak',s:'Done',c:'badge-green'},
+      {n:'Chisom O.',i:'CO',sub:'Leader · 5 pts · missed yesterday',s:'Behind',c:'badge-red'},
+      {n:'Ada M.',i:'AM',sub:'Member · 9 pts · 1 backdated',s:'Catch-up',c:'badge-amber'},
     ]},
     {name:'West',members:[
-      {n:'Emeka T.',i:'ET',sub:'Leader Ã‚Â· 8 pts Ã‚Â· 2-day streak',s:'Done',c:'badge-green'},
-      {n:'Jide A.',i:'JA',sub:'Member Ã‚Â· 3 pts Ã‚Â· backdated',s:'Catch-up',c:'badge-amber'},
+      {n:'Emeka T.',i:'ET',sub:'Leader · 8 pts · 2-day streak',s:'Done',c:'badge-green'},
+      {n:'Jide A.',i:'JA',sub:'Member · 3 pts · backdated',s:'Catch-up',c:'badge-amber'},
     ]},
     {name:'East',members:[
-      {n:'Sola E.',i:'SE',sub:'Leader Ã‚Â· 12 pts Ã‚Â· streak 3',s:'Done',c:'badge-green'},
-      {n:'Kemi O.',i:'KO',sub:'Member Ã‚Â· 7 pts',s:'Done',c:'badge-green'},
+      {n:'Sola E.',i:'SE',sub:'Leader · 12 pts · streak 3',s:'Done',c:'badge-green'},
+      {n:'Kemi O.',i:'KO',sub:'Member · 7 pts',s:'Done',c:'badge-green'},
     ]},
     {name:'North',members:[
-      {n:'Mara K.',i:'MK',sub:'Leader Ã‚Â· 0 pts Ã‚Â· inactive',s:'Behind',c:'badge-red'},
-      {n:'Temi B.',i:'TB',sub:'Member Ã‚Â· 6 pts',s:'Done',c:'badge-green'},
+      {n:'Mara K.',i:'MK',sub:'Leader · 0 pts · inactive',s:'Behind',c:'badge-red'},
+      {n:'Temi B.',i:'TB',sub:'Member · 6 pts',s:'Done',c:'badge-green'},
     ]},
   ];
   m.innerHTML=`
     <div class="circle-pane">
       <div class="card" style="grid-column:1/-1">
         <div class="card-title">Fellowship View <span class="badge badge-purple">${S.user.fellowship}</span></div>
-        <div class="notice">A view of all fellowship members. Pastors and admins see additional analytics.</div>
       </div>
       ${FSHIPS.map(f=>`
         <div class="card">
@@ -363,9 +339,9 @@ function pageFellowship(m){
     </div>`;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // ADMIN VIEW
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function renderAdmin(){
   const m=el('main-content');
   m.style.gridTemplateColumns='';
@@ -407,9 +383,9 @@ function renderAdmin(){
         <div class="card">
           <div style="font-size:13px;font-weight:800;margin-bottom:10px">Source guide</div>
           <div style="font-size:12px;color:var(--muted);line-height:1.8">
-            <strong>Direct MP4 / MP3</strong> Ã¢â‚¬â€ hosted file URL<br>
-            <strong>Google Drive</strong> Ã¢â‚¬â€ share link auto-converts to embed<br>
-            <strong>Web Link</strong> Ã¢â‚¬â€ may open in new tab if embedding is blocked
+            <strong>Direct MP4 / MP3</strong> — hosted file URL<br>
+            <strong>Google Drive</strong> — share link auto-converts to embed<br>
+            <strong>Web Link</strong> — may open in new tab if embedding is blocked
           </div>
         </div>
       </div>
@@ -427,7 +403,7 @@ function renderAdmin(){
             <tr><td><code>email</code></td><td>grace@email.com</td><td><span class="badge badge-red">Yes</span></td></tr>
             <tr><td><code>fellowship</code></td><td>Central</td><td><span class="badge badge-red">Yes</span></td></tr>
             <tr><td><code>role</code></td><td>leader</td><td><span class="badge badge-red">Yes</span></td></tr>
-            <tr><td><code>phone</code></td><td>+234 800Ã¢â‚¬Â¦</td><td><span class="badge badge-amber">Optional</span></td></tr>
+            <tr><td><code>phone</code></td><td>+234 800…</td><td><span class="badge badge-amber">Optional</span></td></tr>
           </tbody></table>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <button class="btn btn-muted">Preview import</button>
@@ -438,7 +414,7 @@ function renderAdmin(){
       <div class="card">
         <div style="font-size:13px;font-weight:800;margin-bottom:10px">Import tips</div>
         <div style="font-size:12px;color:var(--muted);line-height:1.8">
-          Export from Sheets via <em>File Ã¢â€ â€™ Download Ã¢â€ â€™ CSV</em>.<br><br>
+          Export from Sheets via <em>File → Download → CSV</em>.<br><br>
           Role values must match exactly: <code>member</code>, <code>leader</code>, <code>bsc</code>, <code>coordinator</code>, <code>admin</code>, or <code>pastor</code>.<br><br>
           Imported users will be shown in the partner picker so others can add them to their circle during signup or via the Circle tab.
         </div>
@@ -450,7 +426,7 @@ function renderAdmin(){
       <div class="card-title">User directory</div>
       <div style="margin-bottom:14px"><input placeholder="Search name, fellowship, or role" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-family:inherit;font-size:14px;background:#FFFCF6;color:var(--text)"></div>
       <table><thead><tr><th>Name</th><th>Fellowship</th><th>Role</th><th>Status</th></tr></thead><tbody>
-        <tr><td colspan="4">Use the live People view for current members.</td></tr>
+        <tr><td colspan="4" style="color:var(--muted);font-style:italic">No users loaded.</td></tr>
       </tbody></table>
     </div>`;
 
@@ -473,7 +449,6 @@ function renderAdmin(){
       
       <div class="card">
         <div class="card-title">Alerts</div>
-        <div class="notice" style="margin-bottom:12px">Inactive leaders, BSCs, and coordinators with no activity for 3+ days.</div>
         <table><thead><tr><th>Name</th><th>Role</th><th>Fellowship</th><th>Inactive</th></tr></thead><tbody>
           ${ALERTS.map(a=>`
             <tr>
@@ -514,9 +489,9 @@ function renderAdmin(){
   }
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // PASTOR VIEW
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function renderPastor(){
   const m=el('main-content');
   m.style.gridTemplateColumns='';
@@ -536,9 +511,9 @@ function renderPastor(){
     </div>`;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // CIRCLE OVERLAY (post-signup editing)
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function openOverlay(){
   circleDraft=[...(S.user?.partners || [])];
   const grid=el('overlay-grid');
@@ -552,7 +527,7 @@ function openOverlay(){
   grid.innerHTML=choices.map(u=>`
     <label class="partner-card${circleDraft.includes(u.id)?' selected':''}" onclick="toggleOverlay('${u.id}',this)">
       <input type="checkbox"${circleDraft.includes(u.id)?' checked':''} style="pointer-events:none">
-      <div><div class="partner-card-name">${u.name}</div><div class="partner-card-sub">${u.fellowship} Â· ${cap(u.role)}</div></div>
+      <div><div class="partner-card-name">${u.name}</div><div class="partner-card-sub">${u.fellowship} · ${cap(u.role)}</div></div>
     </label>`).join('');
   updateOverlayCount();
   el('circle-overlay').classList.remove('hidden');
@@ -583,9 +558,9 @@ function closeOverlay(e,force){
 }
 
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // COORDINATOR VIEW
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 function pageCoordinatorAnalytics(m){
   m.style.gridTemplateColumns='';
   m.innerHTML=`
@@ -869,7 +844,7 @@ function renderAdminMediaOpsPanel(){
         <div style="font-size:12px;font-weight:800;margin-bottom:6px">Recent runs</div>
         ${(ops.runs || []).slice(0,8).map(r => `
           <div style="font-size:11px;padding:6px 0;border-top:1px solid var(--line)">
-            ${new Date(r.started_at).toLocaleString()} Ã‚Â· ${r.run_type || "run"} Ã‚Â· ${r.updated_count || 0}/${r.processed_count || 0}
+            ${new Date(r.started_at).toLocaleString()} · ${r.run_type || "run"} · ${r.updated_count || 0}/${r.processed_count || 0}
           </div>
         `).join("") || `<div style="font-size:11px;color:var(--muted)">No runs yet.</div>`}
       </div>
@@ -878,7 +853,7 @@ function renderAdminMediaOpsPanel(){
         ${failures.slice(0,10).map(f => `
           <div style="font-size:11px;padding:6px 0;border-top:1px solid var(--line)">
             <div><strong>${f.daily_message_items?.title || f.message_item_id}</strong></div>
-            <div>${f.failure_type} Ã‚Â· retry ${f.retry_count || 0} Ã‚Â· ${new Date(f.occurred_at).toLocaleString()}</div>
+            <div>${f.failure_type} · retry ${f.retry_count || 0} · ${new Date(f.occurred_at).toLocaleString()}</div>
             <div style="color:var(--muted)">${(f.error || "").slice(0,90)}</div>
             <button class="btn btn-soft" style="margin-top:6px" onclick="retryMediaFailure('${f.id}')">Retry</button>
           </div>
@@ -901,9 +876,9 @@ async function retryMediaFailure(failureId){
   }
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 // UTILITIES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ────────────────────────────────────────────
 
 async function renderTodayMessageItems(){
   const host = el("today-message-items");
@@ -1363,11 +1338,11 @@ function renderPersonDetailOverlay(detail) {
         <div>
           <div style="font-size:18px;font-weight:900">${profile.full_name || "Person"}</div>
           <div style="font-size:12px;color:var(--muted);line-height:1.5">
-            ${profile.role || ""} Ã‚Â· ${profile.fellowship || ""}<br>
+            ${profile.role || ""} · ${profile.fellowship || ""}<br>
             ${profile.email || ""}
           </div>
         </div>
-        <button onclick="document.getElementById('person-detail-overlay').remove()" style="border:none;background:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1">Ãƒâ€”</button>
+        <button onclick="document.getElementById('person-detail-overlay').remove()" style="border:none;background:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1">×</button>
       </div>
 
       <div class="notice" style="margin-bottom:14px">
@@ -1402,7 +1377,7 @@ function renderPersonDetailOverlay(detail) {
         <div class="card-title" style="font-size:15px">Shared comments / reflections</div>
         ${reflections.map(r => `
           <div class="member-row">
-            <div class="avatar">Ã°Å¸â€™Â¬</div>
+            <div class="avatar">💬</div>
             <div class="member-info">
               <div class="member-name"><span class="badge badge-purple">${r.visibility}</span></div>
               <div style="font-size:13px;line-height:1.6;margin-top:8px">${r.reflection_text}</div>
@@ -1421,7 +1396,7 @@ function clickablePersonRow(user, statusHtml = "") {
       <div class="avatar">${user.ini || initials(user.name || user.full_name || "U")}</div>
       <div class="member-info">
         <div class="member-name">${user.name || user.full_name}</div>
-        <div class="member-sub">${user.fellowship || ""} Ã‚Â· ${cap(user.role || "")}${canClick ? " Ã‚Â· Tap to view progress" : ""}</div>
+        <div class="member-sub">${user.fellowship || ""} · ${cap(user.role || "")}${canClick ? " · Tap to view progress" : ""}</div>
       </div>
       ${statusHtml}
     </div>`;

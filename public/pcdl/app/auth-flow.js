@@ -1,6 +1,7 @@
 (() => {
   let fellowshipOptionsCache = null;
   let fellowshipOptionsLoading = null;
+  const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
   function byId(id) {
     return document.getElementById(id);
@@ -37,7 +38,7 @@
     if (fellowshipOptionsCache) {
       select.innerHTML =
         `<option value="">Choose your fellowship</option>` +
-        fellowshipOptionsCache.map((f) => `<option>${f.name}</option>`).join("");
+        fellowshipOptionsCache.map((f) => `<option value="${f.id}">${f.name}</option>`).join("");
       return;
     }
 
@@ -57,7 +58,7 @@
       fellowshipOptionsCache = data || [];
       select.innerHTML =
         `<option value="">Choose your fellowship</option>` +
-        fellowshipOptionsCache.map((f) => `<option>${f.name}</option>`).join("");
+        fellowshipOptionsCache.map((f) => `<option value="${f.id}">${f.name}</option>`).join("");
     })();
 
     try {
@@ -166,7 +167,9 @@
       const fullName = readTrimmed("auth-full-name");
       const email = readTrimmed("auth-email");
       const password = byId("auth-password")?.value || "";
-      const selectedFellowship = byId("auth-fellowship")?.value || "";
+      const fellowshipSelect = byId("auth-fellowship");
+      const selectedFellowship = fellowshipSelect?.value || "";
+      const selectedFellowshipName = fellowshipSelect?.selectedOptions?.[0]?.textContent?.trim() || "";
       const selectedRole = "Member";
 
       if (!fullName || !email || !password || !selectedFellowship) {
@@ -174,18 +177,19 @@
         return;
       }
 
-      const { data: fellowshipRow, error: fellowshipError } = await PCDL.supabase
-        .from("fellowships")
-        .select("id, name")
-        .eq("name", selectedFellowship)
-        .maybeSingle();
+      let fellowshipQuery = PCDL.supabase.from("fellowships").select("id, name");
+      fellowshipQuery = UUID_PATTERN.test(selectedFellowship)
+        ? fellowshipQuery.eq("id", selectedFellowship)
+        : fellowshipQuery.eq("name", selectedFellowshipName || selectedFellowship);
+
+      const { data: fellowshipRow, error: fellowshipError } = await fellowshipQuery.maybeSingle();
       if (fellowshipError) throw fellowshipError;
       if (!fellowshipRow?.id) {
         showAuthMessage("Selected fellowship is unavailable. Refresh and try again.");
         return;
       }
 
-      localStorage.setItem("pcdl_selected_fellowship", selectedFellowship);
+      localStorage.setItem("pcdl_selected_fellowship", fellowshipRow.name || selectedFellowshipName || selectedFellowship);
       const result = await PCDL.signUp(email, password, fullName);
       const userId = result?.user?.id || result?.data?.user?.id;
 
@@ -223,6 +227,45 @@
     await PCDL.signOut();
   }
 
+  async function handlePasswordResetSubmit() {
+    try {
+      const password = byId("auth-reset-password")?.value || "";
+      if (!password || password.length < 6) {
+        showAuthMessage("Enter a new password with at least 6 characters.");
+        return;
+      }
+      const { error } = await PCDL.supabase.auth.updateUser({ password });
+      if (error) throw error;
+      showAuthMessage("Password updated. Sign in with your new password.", false);
+      if (window.location.hash) history.replaceState(null, "", window.location.pathname + window.location.search);
+      renderSignup();
+      showAuthMode("login");
+    } catch (err) {
+      showAuthMessage(err.message || "Could not reset password.");
+    }
+  }
+
+  function renderPasswordResetForm() {
+    const main = typeof el === "function" ? el("main-content") : byId("main-content");
+    if (!main) return;
+    main.style.gridTemplateColumns = "";
+    main.innerHTML = `
+      <div class="two-pane">
+        <div class="card">
+          <div class="card-title">Set a new password</div>
+          <div id="auth-message" class="notice" style="display:none"></div>
+          <div style="display:grid;gap:12px">
+            <div class="form-group">
+              <label>New password</label>
+              <input id="auth-reset-password" type="password" placeholder="New password">
+            </div>
+            <button class="btn btn-purple btn-full" onclick="handlePasswordResetSubmit()">Update password</button>
+            <button class="btn btn-soft btn-full" onclick="renderSignup();showAuthMode('login')">Back to sign in</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
   function renderSignup() {
     const main = typeof el === "function" ? el("main-content") : byId("main-content");
     if (!main) return;
@@ -258,17 +301,7 @@
               <label>Fellowship (signup)</label>
               <select id="auth-fellowship">
                 <option value="">Choose your fellowship</option>
-                <option>Brock University</option>
-                <option>Toronto Metropolitan University</option>
-                <option>University of Guelph</option>
-                <option>University of Toronto Mississauga</option>
-                <option>University of Toronto Scarborough</option>
-                <option>University of Waterloo</option>
-                <option>Wilfred Laurier University</option>
-                <option>Western University</option>
-                <option>York University</option>
-                <option>Seneca College</option>
-                <option>Sheridan College</option>
+                <option value="" disabled>Loading fellowships...</option>
               </select>
             </div>
             <div class="notice" id="auth-helper-copy">
@@ -325,16 +358,47 @@
   window.handleSupabaseSignup = handleSupabaseSignup;
   window.handleSupabaseLogout = handleSupabaseLogout;
   window.handleForgotPassword = handleForgotPassword;
+  window.handlePasswordResetSubmit = handlePasswordResetSubmit;
+  window.renderPasswordResetForm = renderPasswordResetForm;
   window.renderSignup = renderSignup;
   window.showAuthMode = showAuthMode;
 
+  PCDL.supabase.auth.onAuthStateChange(async (event, session) => {
+    if (event === "SIGNED_IN" && session && !S.user) {
+      await hydrateSupabaseUser();
+    }
+    if (event === "SIGNED_OUT") {
+      S.user = null;
+      S.page = "home";
+      if (typeof renderSignup === "function") renderSignup();
+    }
+    if (event === "TOKEN_REFRESHED" && session && S.user) {
+      // Session refreshed in background.
+    }
+  });
+
   async function initApp() {
+    const hash = window.location.hash || "";
+    if (hash.includes("type=recovery")) {
+      renderPasswordResetForm();
+      return;
+    }
+
     if (window.PCDLSchemaValidator?.run) {
       await window.PCDLSchemaValidator.run();
     }
+
     const hasUser = await hydrateSupabaseUser();
-    if (!hasUser && typeof renderSignup === "function") renderSignup();
-    else if (!hasUser && typeof render === "function") render();
+    if (!hasUser) {
+      const session = await PCDL.getSession();
+      if (session) {
+        await hydrateSessionFallbackUser();
+      } else if (typeof renderSignup === "function") {
+        renderSignup();
+      } else if (typeof render === "function") {
+        render();
+      }
+    }
   }
 
   if (document.readyState === "loading") {
